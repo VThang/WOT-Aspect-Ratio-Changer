@@ -21,5 +21,30 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: WOT-AspectRatioChanger
+        name: WOT-AspectRatioChanger.exe
         path: dist/windows
+    
+    - name: create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          tag_name: "lastest"
+          release_name: ${{ github.event.head_commit.message }}
+        #   overwrite: true
+          body: |
+              Test Release v1.0.0
+              draft: false
+              prerelease: false
+            
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: dist/windows/WOT-AspectRatioChanger.exe
+          asset_name: WOT-AspectRatioChanger.exe
+          asset_content_type: application/zip
