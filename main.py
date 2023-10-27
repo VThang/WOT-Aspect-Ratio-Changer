@@ -102,7 +102,6 @@ def menu() -> str:
             i = 0
             for key, value in dict_aspect.items():
                 if i == select - 1:
-                    print(f"{key} -> {value}")
                     return key
                 i += 1
             break
