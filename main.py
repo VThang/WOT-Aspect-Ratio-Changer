@@ -1,6 +1,7 @@
 from io import TextIOWrapper
 import os
 import sys
+import time
 
 from bs4 import BeautifulSoup
 
@@ -32,6 +33,7 @@ def main():
 
     change_aspect_ratio(file, key)
     print("VThang - 2023")
+    time.sleep(4)
 
 
 def load_data() -> TextIOWrapper:
