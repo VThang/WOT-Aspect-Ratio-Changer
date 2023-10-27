@@ -1,50 +1,25 @@
-name: Build Workflow
+name: Package Application with Pyinstaller
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build-windows:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Install Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.12'
-          architecture: 'x64'
-      - name: Install requirements
-        run: |
-          pip install -r requirements.txt
-      - name: Run PyInstaller
-        run: |
-          python -m PyInstaller WOT-AspectRatioChanger.spec
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Windows_AspectRatioChanger
-          path: dist/WOT-AspectRatioChanger.exe
+  build:
 
-      - name: create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event.head_commit.message }}
-          release_name: ${{ github.event.head_commit.message }}
-        #   overwrite: true
-          body: |
-            Test Release v1.0.0
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{steps.create_release.outputs.upload_url}}
-          asset_path: dist/WOT-AspectRatioChanger.exe
-          asset_name: WOT-AspectRatioChanger-Windows-amd64.exe
-          asset_content_type: application/zip
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Package Application
+      uses: JackMcKew/pyinstaller-action-windows@main
+      with:
+        path: src
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: WOT-AspectRatioChanger
+        path: src/dist/windows
