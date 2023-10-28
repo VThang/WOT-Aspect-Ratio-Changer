@@ -65,11 +65,13 @@ def load_data() -> ET.ElementTree:
         print(
             "Preference.xml file not found. Trying to run game first to create preferences.xml file then run this program again.\nProgram exited."
         )
+        time.sleep(4)
         sys.exit(0)
     except ET.ParseError:
         print(
             "Preference.xml file malformed. Trying to run game first to recreate preferences.xml file then run this program again.\nProgram exited."
         )
+        time.sleep(4)
         sys.exit(0)
     return tree
 
