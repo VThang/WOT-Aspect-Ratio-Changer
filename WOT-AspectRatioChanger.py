@@ -129,7 +129,7 @@ def menu() -> str:
     )
     i: int = 1
     for key, value in dict_aspect.items():
-        print(f"{i}.{key} -> {value}")
+        print(f"{i}.  {key} -> {value}")
         i += 1
     while True:
         try:

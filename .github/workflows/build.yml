@@ -30,13 +30,11 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          tag_name: "lastest"
+          tag_name: "latest"
           release_name: ${{ github.event.head_commit.message }}
         #   overwrite: true
           body: |
-              Test Release v1.0.0
-              draft: false
-              prerelease: false
+              Test Release v
             
     - name: Upload Release Asset
       id: upload-release-asset
